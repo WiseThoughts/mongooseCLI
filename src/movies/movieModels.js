@@ -10,8 +10,11 @@ const movieSchema = new mongoose.Schema({
         type: String,
     },
     year: {
-        type: String, 
+        type: Number, 
     },
+    watched: {
+        type: Boolean, 
+    }
 });
 
 const Movie = mongoose.model("Movie", movieSchema)
