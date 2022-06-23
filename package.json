@@ -1,0 +1,19 @@
+{
+  "name": "mongoosedbms",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "dependencies": {
+    "dotenv": "^16.0.1",
+    "env": "^0.0.2",
+    "mongodb": "^4.7.0",
+    "mongoose": "^6.4.0",
+    "yargs": "^17.5.1"
+  }
+}
