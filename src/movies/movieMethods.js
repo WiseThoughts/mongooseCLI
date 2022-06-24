@@ -30,51 +30,41 @@ exports.deleteMovie = async (movieObj) => {
     }
 };
 
-//delete all
-exports.deleteAll = async (collection) => {
-    try {
-    const deleteAll = await collection.deleteMany({});
-    console.log(deleteAll);
-    } catch (error) {
-    console.log(error);
-    }
-};
 
-//updates the data
-exports.updateMovie = async (yargsObj, movieObj) => {
+
+// Update movie function
+exports.updateMovie = async (movieObj) => {
     try {
-        if (yargsObj.titleChange){
-        const modded = await Movie.findOneAndUpdate({title: "test"}, 
-            {$set: {title: "Testing"}});
-        console.log(modded.modifiedCount > 0);
-        }else if (yargsObj.yearChange){
-            const modded = await Movie.findOneAndUpdate({year: movieObj.year}, 
-                {$set: {year: movieObj.newYear,}})
-                console.log(modded.modifiedCount > 0);
-        }else if (yargsObj.actor){
-            const modded = await Movie.findOneAndUpdate({actor: movieObj.actor}, 
-                {$set: {actor: movieObj.newActor,}});
-            console.log(modded.modifiedCount > 0);
-        }else if (yargsObj.watched){
-            const modded = await Movie.findOneAndUpdate({watched: movieObj.watched}, 
-                {$set: {watched: movieObj.newWatched,}});
-            console.log(modded.modifiedCount > 0);
-        }
+        const response = await Movie.findOneAndUpdate({
+            title: movieObj.title}, 
+            {$set: {title: movieObj.newTitle,}},{new:true}
+        );
+        console.log(response.modifiedCount > 0);
     } catch (error) {
         console.log(error)
     }
 }
 
+exports.updateMovieActor = async (movieObj) => {
+    try {
+        const response = await Movie.findOneAndUpdate({
+            title: movieObj.title}, 
+            {$set: {actor: movieObj.newActor,}},{new:true}
+        );
+        console.log(response.modifiedCount > 0);
+    } catch (error) {
+        console.log(error)
+    }
+}
 
-// // Update movie function
-// exports.updateMovie = async (movieObj) => {
-//     try {
-//         const response = await Movie.findOneAndUpdate({
-//                 title: movieObj.title}, 
-//                 {$set: {title: movieObj.newTitle,}},{new:true}
-//         );
-//         console.log(response.modifiedCount > 0);
-//     } catch (error) {
-//         console.log(error)
-//     }
-// }
+exports.updateMovieYear = async (movieObj) => {
+    try {
+        const response = await Movie.findOneAndUpdate({
+            title: movieObj.title}, 
+            {$set: {year: movieObj.newYear,}},{new:true}
+        );
+        console.log(response.modifiedCount > 0);
+    } catch (error) {
+        console.log(error)
+    }
+}

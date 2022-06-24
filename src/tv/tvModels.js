@@ -9,9 +9,6 @@ const tvSchema = new mongoose.Schema({
     seasons: {
         type: String,
     },
-    stillAiring: {
-        type: Boolean,
-    }
 });
 
 const TV = mongoose.model("TV", tvSchema)

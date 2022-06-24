@@ -1,8 +1,8 @@
 require("./database/connection");
 const mongoose = require("mongoose")
 const yargs =require("yargs")
-const {addMovie, listMovies, deleteMovie, updateMovie} = require("./movies/movieMethods");
-const { addTV, listTV, deleteTV, updateTV } = require("./tv/tvMthods");
+const {addMovie, listMovies, deleteMovie, updateMovie, updateMovieActor, updateMovieYear, } = require("./movies/movieMethods");
+const { addTV, listTV, deleteTV, updateTV, updateTVSeasons } = require("./tv/tvMthods");
 
 const app = async (yargsObj)=>{
     try{
@@ -11,7 +11,7 @@ const app = async (yargsObj)=>{
             await addMovie({title: yargsObj.title, actor: yargsObj.actor, year: yargsObj.year})
             console.log(await listMovies())
         }else if (yargsObj.addTV){
-            await addTV({title: yargsObj.title, actor: yargsObj.actor, year: yargsObj.year})
+            await addTV({title: yargsObj.title, seasons: yargsObj.seasons, watched: yargsObj.watched})
             console.log(await listTV())
         
 
@@ -28,23 +28,28 @@ const app = async (yargsObj)=>{
         } else if (yargsObj.deleteTV) {
             await deleteTV({title: yargsObj.title});
 
-        //deletes all movies/tv
-        } else if(yargsObj.deleteAll){
-        await deleteAll(collection, yargsObj.deleteAll);
-        console.log("All Data Deleted")
-
 
         //updates the stated title
         } else if (yargsObj.update){
             await updateMovie({title: yargsObj.title, newTitle: yargsObj.newTitle});
             console.log(await listMovies())
-        } else if (yargsObj.updateTV){
+        } else if (yargsObj.updateActor){
+            await updateMovieActor({title: yargsObj.title, newActor: yargsObj.newActor});
+            console.log(await listMovies())
+        } else if (yargsObj.updateYear){
+            await updateMovieYear({title: yargsObj.title, newYear: yargsObj.newYear});
+            console.log(await listMovies())
+
+        //TV updates
+        } else if (yargsObj.updateTVTitle){
             await updateTV({title: yargsObj.title, newTitle: yargsObj.newTitle});
             console.log(await listTV())
-        }
+        } else if (yargsObj.updateTVSeasons){
+            await updateTVSeasons({title: yargsObj.title, newSeasons: yargsObj.newSeasons});
+            console.log(await listTV())
 
 
-        else{
+        }else{
             console.log("Command not recognised")
         }
     await mongoose.disconnect()
@@ -56,13 +61,16 @@ const app = async (yargsObj)=>{
 app(yargs.argv)
 
 // COMMANDS - MOVIE
-// Add movie: node src/app.js --add --title=""
-// List movies: node src/app.js --list
+// Add Movie: node src/app.js --add --title="" --actor="" --year=""
+// List Movies: node src/app.js --list
 // Delete Movie: node src/app.js --delete --title=""
-// Update movie: node src/app.js --update --title="" --newTitle=""
+// Update Movie: node src/app.js --update --title="" --newTitle=""
+// Update Movie: node src/app.js --updateActor --title="" --newActor=""
+// Update Movie: node src/app.js --updateYear --title="" --newYear=""
 
 // COMMANDS - TV
-// Add TV: node src/app.js --addTV --title=""
+// Add TV: node src/app.js --addTV --title="" --seasons="" --watched=true/false
 // List TV shows: node src/app.js --listTV
 // Delete TV: node src/app.js --deleteTV --title=""
-// Update movie: node src/app.js --updateTV --title="" --newTitle=""
+// Update TV: node src/app.js --updateTVTitle --title="" --newTitle=""
+// Update TV: node src/app.js --updateTVSeasons --title="" --newSeasons=""

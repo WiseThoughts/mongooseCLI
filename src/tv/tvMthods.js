@@ -42,3 +42,16 @@ try {
     console.log(error);
 }
 };
+
+exports.updateTVSeasons = async (tvObj)=>{
+    try {
+        const response = await TV.findOneAndUpdate({
+                title: tvObj.title}, 
+                {$set: {seasons: tvObj.newSeasons,}},{new:true});
+        console.log(response.modifiedCount > 0);
+    } catch (error) {
+        console.log(error);
+    }
+};
+
+
