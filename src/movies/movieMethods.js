@@ -30,41 +30,51 @@ exports.deleteMovie = async (movieObj) => {
     }
 };
 
-// //updates the data
-// exports.updateMovie = async (movieObj, yargsObj) => {
-//     try {
-//         if (yargsObj.titleChange){
-//         const modded = await Movie.findOneAndUpdate({title: movieObj.title}, 
-//             {$set: {title: movieObj.newTitle,}});
-//         console.log(modded.modifiedCount > 0);
-//         }else if (yargsObj.yearChange){
-//             const modded = await Movie.findOneAndUpdate({year: movieObj.year}, 
-//                 {$set: {year: movieObj.newYear,}})
-//                 console.log(modded.modifiedCount > 0);
-//         }else if (yargsObj.actor){
-//             const modded = await Movie.findOneAndUpdate({actor: movieObj.actor}, 
-//                 {$set: {actor: movieObj.newActor,}});
-//             console.log(modded.modifiedCount > 0);
-//         }else if (yargsObj.watched){
-//             const modded = await Movie.findOneAndUpdate({watched: movieObj.watched}, 
-//                 {$set: {watched: movieObj.newWatched,}});
-//             console.log(modded.modifiedCount > 0);
-//         }
-//     } catch (error) {
-//         console.log(error)
-//     }
-// }
-
-
-// Update movie function
-exports.updateMovie = async (movieObj) => {
+//delete all
+exports.deleteAll = async (collection) => {
     try {
-        const response = await Movie.findOneAndUpdate({
-                title: movieObj.title}, 
-                {$set: {title: movieObj.newTitle,}},{new:true}
-        );
-        console.log(response.modifiedCount > 0);
+    const deleteAll = await collection.deleteMany({});
+    console.log(deleteAll);
+    } catch (error) {
+    console.log(error);
+    }
+};
+
+//updates the data
+exports.updateMovie = async (yargsObj, movieObj) => {
+    try {
+        if (yargsObj.titleChange){
+        const modded = await Movie.findOneAndUpdate({title: "test"}, 
+            {$set: {title: "Testing"}});
+        console.log(modded.modifiedCount > 0);
+        }else if (yargsObj.yearChange){
+            const modded = await Movie.findOneAndUpdate({year: movieObj.year}, 
+                {$set: {year: movieObj.newYear,}})
+                console.log(modded.modifiedCount > 0);
+        }else if (yargsObj.actor){
+            const modded = await Movie.findOneAndUpdate({actor: movieObj.actor}, 
+                {$set: {actor: movieObj.newActor,}});
+            console.log(modded.modifiedCount > 0);
+        }else if (yargsObj.watched){
+            const modded = await Movie.findOneAndUpdate({watched: movieObj.watched}, 
+                {$set: {watched: movieObj.newWatched,}});
+            console.log(modded.modifiedCount > 0);
+        }
     } catch (error) {
         console.log(error)
     }
 }
+
+
+// // Update movie function
+// exports.updateMovie = async (movieObj) => {
+//     try {
+//         const response = await Movie.findOneAndUpdate({
+//                 title: movieObj.title}, 
+//                 {$set: {title: movieObj.newTitle,}},{new:true}
+//         );
+//         console.log(response.modifiedCount > 0);
+//     } catch (error) {
+//         console.log(error)
+//     }
+// }

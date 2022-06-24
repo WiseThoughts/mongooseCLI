@@ -2,7 +2,7 @@ require("./database/connection");
 const mongoose = require("mongoose")
 const yargs =require("yargs")
 const {addMovie, listMovies, deleteMovie, updateMovie} = require("./movies/movieMethods");
-const { addTV, listTV, deleteTV } = require("./tv/tvMthods");
+const { addTV, listTV, deleteTV, updateTV } = require("./tv/tvMthods");
 
 const app = async (yargsObj)=>{
     try{
@@ -27,12 +27,20 @@ const app = async (yargsObj)=>{
             await deleteMovie({title: yargsObj.title});
         } else if (yargsObj.deleteTV) {
             await deleteTV({title: yargsObj.title});
-        
+
+        //deletes all movies/tv
+        } else if(yargsObj.deleteAll){
+        await deleteAll(collection, yargsObj.deleteAll);
+        console.log("All Data Deleted")
+
 
         //updates the stated title
         } else if (yargsObj.update){
             await updateMovie({title: yargsObj.title, newTitle: yargsObj.newTitle});
-            console.log(newTitle)
+            console.log(await listMovies())
+        } else if (yargsObj.updateTV){
+            await updateTV({title: yargsObj.title, newTitle: yargsObj.newTitle});
+            console.log(await listTV())
         }
 
 
@@ -57,3 +65,4 @@ app(yargs.argv)
 // Add TV: node src/app.js --addTV --title=""
 // List TV shows: node src/app.js --listTV
 // Delete TV: node src/app.js --deleteTV --title=""
+// Update movie: node src/app.js --updateTV --title="" --newTitle=""

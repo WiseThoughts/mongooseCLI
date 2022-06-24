@@ -29,3 +29,16 @@ exports.deleteTV = async (tvObj) => {
         console.log(error)
     }
 };
+
+//update TV
+exports.updateTV = async (tvObj)=>{
+try {
+    const response = await TV.findOneAndUpdate({
+            title: tvObj.title}, 
+            {$set: {title: tvObj.newTitle,}},{new:true}
+    );
+    console.log(response.modifiedCount > 0);
+} catch (error) {
+    console.log(error);
+}
+};
